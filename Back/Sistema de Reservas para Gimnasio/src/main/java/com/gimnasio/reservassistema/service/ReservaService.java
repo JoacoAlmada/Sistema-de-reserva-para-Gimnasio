@@ -11,6 +11,7 @@ import org.modelmapper.ModelMapper;
 import org.modelmapper.TypeToken;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDateTime;
 import java.util.List;
 
 @Service
@@ -38,6 +39,11 @@ public class ReservaService {
     }
     public List<ReservaDTO> findAllTurnosByActividad(Long actividadId) {
         List<Reserva> reservaList = reservaRepository.findReservaByActividad_Id(actividadId);
+        return modelMapper.map(reservaList , new TypeToken<List<ReservaDTO>>(){}.getType());
+    }
+
+    public List<ReservaDTO> findAllTurnosByFecha(LocalDateTime fechaHora) {
+        List<Reserva> reservaList = reservaRepository.findReservaByFechaHora(fechaHora);
         return modelMapper.map(reservaList , new TypeToken<List<ReservaDTO>>(){}.getType());
     }
 

@@ -33,8 +33,6 @@ Desarrollar un sistema completo de gestión de reservas para un gimnasio con **b
 ---
 
 
-
-
 ## 📁 Estructura del Proyecto Backend
 
 src/main/java/com/gimnasio/reservas/
