@@ -39,6 +39,6 @@ public class Reserva {
     @Column
     private String observaciones;
 
-    @Column
-    private String status;
+    @Enumerated(EnumType.STRING)
+    private ReservaStatus status;
 }
