@@ -2,13 +2,11 @@ package com.gimnasio.reservassistema.controller;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.gimnasio.reservassistema.dto.ReservaDTO;
+import com.gimnasio.reservassistema.dto.ReservaRequestDTO;
 import com.gimnasio.reservassistema.service.ReservaService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
@@ -43,5 +41,17 @@ public class ReservaController {
         else{
             return ResponseEntity.ok(reservaService.findAllTurnos());
         }
+    }
+
+    @PostMapping("reserva/programar")
+    public ResponseEntity<List<ReservaDTO>> ProgramarReservas(
+            @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd") @RequestParam LocalDate fecha
+    ){
+        return ResponseEntity.ok(reservaService.programarReserva(fecha));
+    }
+
+    @PutMapping("/reserva")
+    public ResponseEntity<ReservaDTO> createNewReserva(@RequestBody ReservaRequestDTO ReservaRequestDTO) {
+        return ResponseEntity.ok(reservaService.NuevaReserva(ReservaRequestDTO));
     }
 }

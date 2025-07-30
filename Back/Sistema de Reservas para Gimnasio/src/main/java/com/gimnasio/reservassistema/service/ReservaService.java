@@ -1,10 +1,7 @@
 package com.gimnasio.reservassistema.service;
 
-import com.gimnasio.reservassistema.dto.InstructorDTO;
-import com.gimnasio.reservassistema.dto.ReservaDTO;
-import com.gimnasio.reservassistema.entitie.Instructor;
-import com.gimnasio.reservassistema.entitie.Reserva;
-import com.gimnasio.reservassistema.entitie.ReservaStatus;
+import com.gimnasio.reservassistema.dto.*;
+import com.gimnasio.reservassistema.entitie.*;
 import com.gimnasio.reservassistema.repositories.ReservaRepository;
 import lombok.RequiredArgsConstructor;
 import org.modelmapper.ModelMapper;
@@ -17,8 +14,8 @@ import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
+import java.util.Optional;
 
 @Service
 @RequiredArgsConstructor
@@ -97,6 +94,49 @@ public class ReservaService {
         }
 
         return reservasProgramadas;
+    }
+
+    public ReservaDTO NuevaReserva(ReservaRequestDTO reservaRequestDTO) {
+        ActividadDTO actividad = actividadService.findActividadById(reservaRequestDTO.getActividad().getId());
+        SocioDTO socio = socioService.getSocioById(reservaRequestDTO.getSocio().getId());
+        InstructorDTO instructor = instructorService.findInstructorById(reservaRequestDTO.getInstructor().getId());
+
+        LocalDate fecha = reservaRequestDTO.getFechaHora().toLocalDate();
+
+        // Validar máximo 2 reservas por socio ese día
+        int reservasSocio = reservaRepository.findBySocioIdAndFecha(socio.getId(), fecha);
+        if (reservasSocio >= 2) {
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Máximo 2 reservas por socio por día");
+        }
+        // Buscar reserva disponible para instructor en fecha y hora
+        Optional<Reserva> optReserva = reservaRepository.findReservaByFechaHoraAndInstructor_Id(
+                reservaRequestDTO.getFechaHora(), instructor.getId());
+        Reserva r = optReserva
+                .filter(p -> p.getStatus().equals(ReservaStatus.DISPONIBLE))
+                .orElseThrow(() -> new ResponseStatusException(HttpStatus.BAD_REQUEST, "No hay reserva disponible"));
+
+
+        // Validar que instructor no tenga otra clase a esa hora (además de la encontrada)
+        boolean instructorOcupado = reservaRepository.existsByInstructorIdAndFechaHoraAndStatus((
+                instructor.getId()), reservaRequestDTO.getFechaHora(), ReservaStatus.OCUPADO);
+        if (instructorOcupado) {
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Instructor ya tiene clase a esa hora");
+        }
+
+        // Validar máximo 60 reservas totales por día
+        int reservasDia = reservaRepository.countByFecha(fecha);
+        if (reservasDia >= 60) {
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Máximo 60 reservas por día alcanzado");
+        }
+
+        r.setSocio(modelMapper.map(socio, Socio.class));
+        r.setActividad(modelMapper.map(actividad, Actividad.class));
+        r.setObservaciones(reservaRequestDTO.getObservaciones());
+        r.setStatus(ReservaStatus.OCUPADO);
+
+        reservaRepository.save(r);
+        return modelMapper.map(r, ReservaDTO.class);
+
     }
 
 }
