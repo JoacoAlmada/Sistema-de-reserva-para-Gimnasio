@@ -14,6 +14,7 @@
       <div>
         <div >Fecha y Hora: {{ reserva.fechaHora | date:'dd/MM/yyyy HH:mm' }}</div>
         <div >Instructor: {{ reserva.instructor?.nombre_completo }}</div>
+        <div> Especialidad: {{reserva.instructor?.especialidad}}</div>
       </div>
       <button (click)="seleccionarTurno(reserva)"
               >Seleccionar</button>
