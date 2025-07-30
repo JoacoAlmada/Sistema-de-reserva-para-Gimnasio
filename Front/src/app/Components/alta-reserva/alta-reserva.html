@@ -1,1 +1,48 @@
-<p>alta-reserva works!</p>
+<div class="alta-turno-container">
+  <h2 >Alta de Turno</h2>
+  <form  #form="ngForm" (ngSubmit)="guardarTurno()">
+    <div>
+      <label >Socio</label>
+      <select
+              name="socio" [(ngModel)]="reserva.socio_id" required>
+        <option value="">[Seleccionar paciente]</option>
+        @for (s of socio; track $index) {
+
+          <option value="{{s.id}}">{{ s.nombre_completo }}</option>
+        }
+      </select>
+    </div>
+    <div>
+      <label >Actividad</label>
+      <select
+              name="actividad" [(ngModel)]="reserva.actividad_id" required>
+        <option value="">[Seleccionar estudio]</option>
+        @for (a of actividades; track $index) {
+          <option value="{{a.id}}">{{ a.nombreActividad }}</option>
+        }
+      </select>
+    </div>
+    <div>
+      <label>Instructor</label>
+      <select
+              name="instructor" [(ngModel)]="reserva.instructor_id" required>
+        <option value="">[Seleccionar extractor]</option>
+        @for (i of instructor; track $index) {
+          <option value="{{i.id}}">{{ i.nombre_completo }}</option>
+        }
+      </select>
+    </div>
+    <div>
+      <label >Fecha y Hora</label>
+      <input  type="datetime-local"
+             [(ngModel)]="reserva.fechaHora"/>
+      <div class="text-xs text-gray-400 mt-1">Horario válido: 07:00 - 10:45</div>
+    </div>
+    <div>
+      <label >Observaciones</label>
+      <input  type="text"
+             [(ngModel)]="reserva.observaciones"/>
+    </div>
+    <button  type="submit">Guardar Turno</button>
+  </form>
+</div>

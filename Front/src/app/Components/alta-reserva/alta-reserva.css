@@ -1,0 +1,88 @@
+.alta-turno-container {
+  max-width: 600px;
+  margin: 2rem auto;
+  background-color: #ffffff;
+  padding: 2rem;
+  border-radius: 12px;
+  box-shadow: 0 6px 16px rgba(0, 0, 0, 0.08);
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+/* Título */
+.alta-turno-container h2 {
+  font-size: 1.8rem;
+  color: #1e3a8a;
+  text-align: center;
+  margin-bottom: 1.5rem;
+  font-weight: 600;
+}
+
+/* Cada grupo del formulario */
+.alta-turno-container form > div {
+  margin-bottom: 1.3rem;
+}
+
+/* Etiquetas */
+.alta-turno-container label {
+  display: block;
+  font-size: 0.95rem;
+  font-weight: 600;
+  margin-bottom: 0.4rem;
+  color: #374151;
+}
+
+/* Selects e inputs */
+.alta-turno-container select,
+.alta-turno-container input[type="datetime-local"],
+.alta-turno-container input[type="text"] {
+  width: 100%;
+  padding: 0.65rem 1rem;
+  border: 1px solid #cbd5e1;
+  border-radius: 8px;
+  font-size: 1rem;
+  background-color: #f9fafb;
+  transition: border-color 0.3s ease, box-shadow 0.3s ease;
+}
+
+.alta-turno-container select:focus,
+.alta-turno-container input:focus {
+  border-color: #3b82f6;
+  outline: none;
+  box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.2);
+}
+
+/* Mensaje adicional (debajo de datetime-local) */
+.alta-turno-container .text-xs {
+  font-size: 0.8rem;
+  color: #6b7280;
+  margin-top: 0.3rem;
+}
+
+/* Botón de guardar */
+.alta-turno-container button[type="submit"] {
+  width: 100%;
+  background-color: #1d4ed8;
+  color: #ffffff;
+  padding: 0.8rem 1rem;
+  font-size: 1rem;
+  font-weight: 600;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.alta-turno-container button[type="submit"]:hover {
+  background-color: #1e40af;
+}
+
+/* Responsive */
+@media (max-width: 600px) {
+  .alta-turno-container {
+    padding: 1.5rem;
+  }
+
+  .alta-turno-container h2 {
+    font-size: 1.5rem;
+  }
+}

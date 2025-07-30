@@ -1,0 +1,77 @@
+h1 {
+  font-size: 2rem;
+  color: #20232a;
+  margin: 1rem 0;
+  text-align: center;
+}
+
+span {
+  display: block;
+  color: #c53030;
+  font-weight: 600;
+  margin: 1rem 0 0.5rem 0;
+  text-align: center;
+}
+
+table {
+  width: 100%;
+  border-collapse: collapse;
+  margin: 1rem auto;
+  background-color: #fff;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.05);
+  border-radius: 8px;
+  overflow: hidden;
+}
+
+thead {
+  background-color: #20232a;
+  color: #ffffff;
+}
+
+th {
+  text-align: left;
+  padding: 1rem;
+  font-size: 0.95rem;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+td {
+  padding: 0.9rem 1rem;
+  border-bottom: 1px solid #f0f0f0;
+  font-size: 0.95rem;
+  color: #333;
+}
+
+tr:hover {
+  background-color: #f0f8ff;
+  transition: background-color 0.3s ease;
+}
+
+/* Status badge */
+td span {
+  background-color: #e2e8f0;
+  color: #2d3748;
+  padding: 0.3rem 0.6rem;
+  border-radius: 5px;
+  font-size: 0.8rem;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  table {
+    font-size: 0.85rem;
+  }
+
+  th, td {
+    padding: 0.7rem;
+  }
+
+  h1 {
+    font-size: 1.6rem;
+  }
+
+  span {
+    font-size: 0.9rem;
+  }
+}

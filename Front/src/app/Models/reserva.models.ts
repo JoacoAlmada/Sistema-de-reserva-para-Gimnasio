@@ -14,9 +14,9 @@ export interface ReservaDto {
 }
 
 export interface ReservaRequest {
-  socio_Id : number;
-  actividad_Id: number;
-  instructor_Id : number;
+  socio_id : number;
+  actividad_id: number;
+  instructor_id : number;
   fechaHora: string;
   observaciones : string;
 

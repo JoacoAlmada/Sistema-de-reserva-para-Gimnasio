@@ -1,1 +1,58 @@
-<p>reserva-filter works!</p>
+<form (ngSubmit)="filtrarTurnos()" >
+  <div >
+    <label >Filtrar por:</label>
+    <label >
+      <input  name="tipoFiltro" value="socio" [(ngModel)]="tipoFiltro" (change)="onTipoFiltroChange()">
+      Socio
+    </label>
+    <label >
+      <input  name="tipoFiltro" value="actividad" [(ngModel)]="tipoFiltro" (change)="onTipoFiltroChange()">
+      Actividad
+    </label>
+    <label >
+      <input  name="tipoFiltro" value="instructor" [(ngModel)]="tipoFiltro" (change)="onTipoFiltroChange()">
+      Instructor
+    </label>
+    <label >
+      <input  name="tipoFiltro" value="fecha" [(ngModel)]="tipoFiltro" (change)="onTipoFiltroChange()">
+      fechaHora
+    </label>
+  </div>
+  <div  *ngIf="tipoFiltro === 'socio'">
+    <label >Socio</label>
+    <select [(ngModel)]="filtro.socio_id" name="filter_socio_id" (change)="limpiarFiltros('socio_id')"
+            >
+      <option value="">[Todos]</option>
+      @for (s of socio; track s.id) {
+        <option [value]="s.id">{{ s.nombre_completo }}</option>
+      }
+    </select>
+  </div>
+  <div  *ngIf="tipoFiltro === 'actividad'">
+    <label >Actividad</label>
+    <select [(ngModel)]="filtro.actividad_id" name="filter_actividad_id" (change)="limpiarFiltros('actividad_id')"
+          >
+      <option value="">[Todos]</option>
+      @for (a of actividad; track a.id) {
+        <option [value]="a.id">{{ a.nombreActividad }}</option>
+      }
+    </select>
+  </div>
+  <div  *ngIf="tipoFiltro === 'instructor'">
+    <label >Instructor</label>
+    <select [(ngModel)]="filtro.instructor_id" name="filter_instructor_id" (change)="limpiarFiltros('instructor_id')"
+            >
+      <option value="">[Todos]</option>
+      @for (i of instructor; track i.id) {
+        <option [value]="i.id">{{ i.nombre_completo }}</option>
+      }
+    </select>
+  </div>
+  <div  *ngIf="tipoFiltro === 'fecha'">
+    <label >fechaHora</label>
+    <input type="date" [(ngModel)]="filtro.fechaHora" (input)="limpiarFiltros('fecha')" name="fechaHora"
+            />
+  </div>
+  <button type="submit">Filtrar</button>
+</form>
+

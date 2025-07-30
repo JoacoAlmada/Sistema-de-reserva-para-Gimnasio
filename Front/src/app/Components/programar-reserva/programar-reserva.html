@@ -1,1 +1,22 @@
-<p>programar-reserva works!</p>
+<div class="programar-reserva-container" >
+  <h2 >Programar Reserva Diarios</h2>
+  <form (ngSubmit)="programar()" >
+    <div>
+      <label >Fecha</label>
+      <input required type="date" [(ngModel)]="fecha" name="fecha"
+              />
+    </div>
+    <button type="submit"
+            [disabled]="cargando">Programar</button>
+    @if (cargando) {
+      <span >Procesando...</span>
+    }
+  </form>
+  @if (error) {
+    <div >{{ error }}</div>
+  }
+  @if (mensaje) {
+    <div >{{ mensaje }}</div>
+  }
+</div>
+
