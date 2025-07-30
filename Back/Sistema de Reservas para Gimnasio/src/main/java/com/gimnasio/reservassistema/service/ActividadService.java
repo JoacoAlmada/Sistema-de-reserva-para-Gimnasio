@@ -23,7 +23,7 @@ public class ActividadService {
         return modelMapper.map(actividadList, new TypeToken<List<ActividadDTO>>(){}.getType());
     }
 
-    public ActividadDTO findActividadById(Long id) {
+    public ActividadDTO getActividadById(Long id) {
         Optional<Actividad> actividad = actividadRepository.findById(id);
         if (actividad.isPresent()) {
             return modelMapper.map(actividad.get(), ActividadDTO.class);
@@ -33,6 +33,8 @@ public class ActividadService {
             throw new EntityNotFoundException("Actividad no encontrado por id: " + id);
         }
     }
+
+
 
     //OTRA FORMA DE HACERLO
     //Actividad actividadid = actividadRepository.findById(id).orElseThrow(() -> new EntityNotFoundException("Actividad no encontrado por id: " + id));

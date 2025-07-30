@@ -15,15 +15,15 @@ import java.time.LocalDateTime;
 @NoArgsConstructor
 @AllArgsConstructor
 public class ReservaRequestDTO {
-    @JsonProperty("socio_id")
+    @JsonProperty("socioId")
     @NotNull
-    private SocioDTO socio;
-    @JsonProperty("actividad_id")
+    private Long socioId;
+    @JsonProperty("actividadId")
     @NotNull
-    private ActividadDTO actividad;
-    @JsonProperty("instructor_id")
+    private Long actividadId;
+    @JsonProperty("instructorId")
     @NotNull
-    private InstructorDTO instructor;
+    private Long instructorId;
 
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd'T'HH:mm:ss")
     @NotNull

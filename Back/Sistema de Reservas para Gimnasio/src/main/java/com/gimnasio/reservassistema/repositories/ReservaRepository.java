@@ -3,11 +3,12 @@ package com.gimnasio.reservassistema.repositories;
 import com.gimnasio.reservassistema.entitie.Reserva;
 import com.gimnasio.reservassistema.entitie.ReservaStatus;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Query;
+import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
-import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
 
@@ -26,9 +27,9 @@ public interface ReservaRepository extends JpaRepository<Reserva, Long> {
 
     Optional<Reserva> findReservaByFechaHoraAndInstructor_Id(LocalDateTime fechaHora, Long instructorId);
 
-    int findBySocioIdAndFecha(Long id, LocalDate fecha);
+    int countByFechaHoraBetween(LocalDateTime start, LocalDateTime end);
 
     boolean existsByInstructorIdAndFechaHoraAndStatus(Long instructorId, LocalDateTime attr0, ReservaStatus status);
 
-    int countByFecha(LocalDate fecha);
+    int countBySocioIdAndFechaHoraBetween(Long socioId, LocalDateTime start, LocalDateTime end);
 }

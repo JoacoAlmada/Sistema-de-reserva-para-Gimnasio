@@ -97,14 +97,21 @@ public class ReservaService {
     }
 
     public ReservaDTO NuevaReserva(ReservaRequestDTO reservaRequestDTO) {
-        ActividadDTO actividad = actividadService.findActividadById(reservaRequestDTO.getActividad().getId());
-        SocioDTO socio = socioService.getSocioById(reservaRequestDTO.getSocio().getId());
-        InstructorDTO instructor = instructorService.findInstructorById(reservaRequestDTO.getInstructor().getId());
+        if (reservaRequestDTO.getActividadId() == null) {
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "El campo actividad es obligatorio");
+        }
+        ActividadDTO actividad = actividadService.getActividadById(reservaRequestDTO.getActividadId());
+        SocioDTO socio = socioService.getSocioById(reservaRequestDTO.getSocioId());
+        InstructorDTO instructor = instructorService.getInstructorById(reservaRequestDTO.getInstructorId());
 
         LocalDate fecha = reservaRequestDTO.getFechaHora().toLocalDate();
 
         // Validar máximo 2 reservas por socio ese día
-        int reservasSocio = reservaRepository.findBySocioIdAndFecha(socio.getId(), fecha);
+        LocalDate f = reservaRequestDTO.getFechaHora().toLocalDate();
+        LocalDateTime start = f.atStartOfDay();
+        LocalDateTime end = f.plusDays(1).atStartOfDay();
+
+        int reservasSocio = reservaRepository.countBySocioIdAndFechaHoraBetween(reservaRequestDTO.getSocioId(), start, end);
         if (reservasSocio >= 2) {
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Máximo 2 reservas por socio por día");
         }
@@ -124,7 +131,11 @@ public class ReservaService {
         }
 
         // Validar máximo 60 reservas totales por día
-        int reservasDia = reservaRepository.countByFecha(fecha);
+        LocalDate F = reservaRequestDTO.getFechaHora().toLocalDate();
+        LocalDateTime s = F.atStartOfDay();
+        LocalDateTime e = F.plusDays(1).atStartOfDay();
+
+        int reservasDia = reservaRepository.countByFechaHoraBetween(s, e);
         if (reservasDia >= 60) {
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Máximo 60 reservas por día alcanzado");
         }

@@ -24,7 +24,7 @@ public class InstructorService {
         return modelMapper.map(instructorList,new TypeToken<List<InstructorDTO>>(){}.getType());
     }
 
-    public InstructorDTO findInstructorById(Long id) {
+    public InstructorDTO getInstructorById(Long id) {
         Optional<Instructor> instructor = instructorRepository.findById(id);
         if(instructor.isPresent()) {
             return modelMapper.map(instructor.get(),InstructorDTO.class);
